@@ -20,5 +20,12 @@ module NycGreenMarkets
       end
       markets
     end
+
+    def self.find_by(search_term)
+      key = search_term.keys.first.to_s
+      value = search_term.values.first
+      market = Unirest.get("https://data.cityofnewyork.us/resource/cw3p-q2v6.json?#{key}=#{value}").body.first
+      GreenMarket.new(market)
+    end
   end
 end
